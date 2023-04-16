@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 // import our new SearchBar componenbtㄴ
+import debounce from 'lodash.debounce';
 import youtubeSearch from '../services/youtube-api';
 import SearchBar from './search_bar';
 import VideoList from './video_list';
-import VideoListItem from './video_list_item';
 import VideoDetail from './video_detail';
 
 function App(props) {
@@ -19,17 +19,24 @@ function App(props) {
     });
   };
 
+  const debouncedSearch = useCallback(debounce(search, 500), []);
+
   useEffect(() => {
     search('pixar');
   }, []);
 
+  youtubeSearch('pixar').then(
+    console.log(videos),
+  );
+
   return (
     <div>
-      <SearchBar onSearchChange={search} />;
+      <SearchBar onSearchChange={debouncedSearch} />;
+      <div id="video-section">
+        <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />
+        <VideoDetail video={selectedVideo} />
+      </div>
 
-      <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />;
-
-      <VideoDetail video={selectedVideo} />;
     </div>
   );
 }

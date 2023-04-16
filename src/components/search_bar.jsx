@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-function SearchBar() {
+function SearchBar(props) {
   const [searchterm, setSearchTerm] = useState('');
 
   // add this above your return
   const onInputChange = (event) => {
     console.log(event.target.value);
-    // in your onInputChange method add:
     setSearchTerm(event.target.value);
+    props.onSearchChange(event.target.value);
   };
 
   return (
