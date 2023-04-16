@@ -15,6 +15,7 @@ function App(props) {
     youtubeSearch(text).then((result) => {
       setVideos(result);
       setSelected(result[0]);
+      console.log(result);
     });
   };
 
@@ -22,29 +23,15 @@ function App(props) {
     search('pixar');
   }, []);
 
-  youtubeSearch('pixar').then((result) => {
-    setVideos(result);
-    setSelected(result[0]);
-    console.log(result);
-  });
+  return (
+    <div>
+      <SearchBar onSearchChange={search} />;
 
-  const videoItems = props.videos.map((video) => {
-    return <VideoListItem key={video.etag} video={video} />;
-  });
+      <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />;
 
-  // render it after SearchBar
-    <VideoDetail video={selectedVideo} />;
-    // finally selectedVideo comes into play!
-
-    return (
-      <div>
-        <SearchBar onSearchChange={search} />;
-        <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />;
-        <li onClick={() => props.onVideoSelect(props.video)} />;
-        <VideoListItem key={videos.etag} video={videos} onVideoSelect={props.onVideoSelect} />;
-
-      </div>
-    );
+      <VideoDetail video={selectedVideo} />;
+    </div>
+  );
 }
 
 export default App;
