@@ -2,7 +2,7 @@
 
 React starter short assignment
 
-[deployed url](https://sookyoungsa3.onrender.com)
+[deployed url](https://soosa3.onrender.com)
 
 ## What Worked Well
     Overall followed the short assignment material well.
