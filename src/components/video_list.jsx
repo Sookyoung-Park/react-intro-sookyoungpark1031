@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import VideoListItem from './video_list_item';
 
 function VideoList(props) {
-  const videoItems = props.videos.map((video) => {
+  // const videos = useSelector((state) => (state.video.list));
+  const video = useSelector((reduxState) => reduxState.video.selected);
+  const videoItems = props.videos.map((videos) => {
     return <VideoListItem key={video.etag} video={video} onVideoSelect={props.onVideoSelect} />;
   });
 

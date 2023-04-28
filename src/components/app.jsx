@@ -5,7 +5,7 @@ import youtubeSearch from '../services/youtube-api';
 import SearchBar from './search_bar';
 import VideoList from './video_list';
 import VideoDetail from './video_detail';
-import YouTube from './youtube';
+// import YouTube from './youtube';
 
 function App(props) {
   const [videos, setVideos] = useState([]);

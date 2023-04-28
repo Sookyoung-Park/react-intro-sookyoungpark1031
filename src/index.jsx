@@ -18,8 +18,23 @@ import { createRoot } from 'react-dom/client';
 import {
   BrowserRouter, Routes, Route, NavLink,
 } from 'react-router-dom';
+import ActionTypes from './actions';
 
 import YouTube from './components/youtube';
+
+export function selectVideo(video) {
+  return {
+    type: ActionTypes.SELECT_VIDEO,
+    payload: video,
+  };
+}
+
+export function setVideos(videos) {
+  return {
+    type: ActionTypes.SET_VIDEOS,
+    payload: videos,
+  };
+}
 
 function Nav(props) {
   return (
