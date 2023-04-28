@@ -5,9 +5,7 @@ function VideoDetail({ video }) {
   if (!video) {
     return <div>Loading...</div>;
   }
-  const { videoId } = video.id; // will give linting error - read it and decide for yourself
-  // const {videoId} = video.id // is example of destructuring, pulling videoId from out of the object that is video.id
-  const url = `https://www.youtube.com/embed/${videoId}`;
+  const { videoId } = video.id;
 
   return (
 

@@ -22,6 +22,7 @@ const initialState = {
 // better version that uses a curried immer function
 // note: initialState is passed in as second argument rather than default parameter, and no need to return as produce handles that
 const VideoReducer = produce((draftState, action = {}) => {
+  console.log('VideoReducer', action);
   switch (action.type) {
     case ActionTypes.SELECT_VIDEO:
       draftState.selected = action.payload;

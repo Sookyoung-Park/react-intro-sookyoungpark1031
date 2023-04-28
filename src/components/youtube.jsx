@@ -39,18 +39,22 @@
 import React, { useCallback, useState, useEffect } from 'react';
 
 import debounce from 'lodash.debounce';
+import { useDispatch } from 'react-redux';
 import youtubeSearch from '../services/youtube-api';
 import SearchBar from './search_bar';
 import VideoList from './video_list';
 import VideoDetail from './video_detail';
 
+import { setVideos } from '../actions';
+
 function App(props) {
-  const [videos, setVideos] = useState([]);
+  const dispatch = useDispatch();
+  // const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelected] = useState(null);
 
   const search = (text) => {
     youtubeSearch(text).then((result) => {
-      setVideos(result);
+      dispatch(setVideos(result));
       setSelected(result[0]);
       console.log(result);
     });
@@ -66,15 +70,15 @@ function App(props) {
     search('pixar');
   }, []);
 
-  useEffect(() => {
-    console.log(videos);
-  }, [videos]);
+  // useEffect(() => {
+  //   console.log(videos);
+  // }, [videos]);
 
   return (
     <div>
       <SearchBar onSearchChange={debouncedSearch} />;
       <div id="video-section">
-        <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />
+        <VideoList onVideoSelect={(selection) => setSelected(selection)} />
         <VideoDetail video={selectedVideo} />
       </div>
 
