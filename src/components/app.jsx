@@ -1,47 +1,95 @@
-import React, { useCallback, useState, useEffect } from 'react';
+// import React, { useCallback, useState, useEffect } from 'react';
 
+// import debounce from 'lodash.debounce';
+// import youtubeSearch from '../services/youtube-api';
+// import SearchBar from './search_bar';
+// import VideoList from './video_list';
+// import VideoDetail from './video_detail';
+// import YouTube from './youtube';
+
+// function App(props) {
+//   const [videos, setVideos] = useState([]);
+//   const [selectedVideo, setSelected] = useState(null);
+
+//   const search = (text) => {
+//     youtubeSearch(text).then((result) => {
+//       setVideos(result);
+//       setSelected(result[0]);
+//       console.log(result);
+//     });
+//   };
+
+//   const debouncedSearch = useCallback(debounce(search, 500), []);
+
+//   const handleVideoSelect = useCallback((video) => {
+//     setSelected(video);
+//   }, []);
+
+//   useEffect(() => {
+//     search('pixar');
+//   }, []);
+
+//   useEffect(() => {
+//     console.log(videos);
+//   }, [videos]);
+
+//   return (
+//     <div>
+//       {/* <SearchBar onSearchChange={debouncedSearch} />; */}
+//       <YouTube onVideoSelect={handleVideoSelect} />
+//       {/* <div id="video-section">
+//         <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />
+//         <VideoDetail video={selectedVideo} />
+//       </div> */}
+
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import React, { useCallback, useState, useEffect } from 'react';
 import debounce from 'lodash.debounce';
+import { useDispatch } from 'react-redux';
 import youtubeSearch from '../services/youtube-api';
 import SearchBar from './search_bar';
 import VideoList from './video_list';
 import VideoDetail from './video_detail';
-import YouTube from './youtube';
+import { setVideos, selectVideo } from '../actions';
 
 function App(props) {
-  const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelected] = useState(null);
+  const dispatch = useDispatch();
+  // const [videos, setVideos] = useState([]);
+  // const [selectedVideo, setSelectedVideo] = useState(null);
 
-  const search = (text) => {
+  const search = useCallback((text) => {
     youtubeSearch(text).then((result) => {
-      setVideos(result);
-      setSelected(result[0]);
-      console.log(result);
+      dispatch(setVideos(result));
+      dispatch(selectVideo(result[0]));
     });
-  };
+  }, [dispatch]);
 
-  const debouncedSearch = useCallback(debounce(search, 500), []);
-
-  const handleVideoSelect = useCallback((video) => {
-    setSelected(video);
-  }, []);
+  const debouncedSearch = useCallback(debounce(search, 500), [search]);
 
   useEffect(() => {
     search('pixar');
-  }, []);
+  }, [search]);
 
-  useEffect(() => {
-    console.log(videos);
-  }, [videos]);
+  const handleVideoSelect = useCallback((video) => {
+    // setSelectedVideo(video);
+    // dispatch(selectVideo(video));
+    dispatch(selectVideo(video));
+  }, [dispatch]);
 
   return (
     <div>
-      {/* <SearchBar onSearchChange={debouncedSearch} />; */}
-      <YouTube onVideoSelect={handleVideoSelect} />
-      {/* <div id="video-section">
-        <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />
-        <VideoDetail video={selectedVideo} />
-      </div> */}
-
+      <SearchBar onSearchChange={debouncedSearch} />
+      <div id="video-section">
+        {/* <VideoList onVideoSelect={handleVideoSelect} />
+        <VideoDetail video={selectedVideo} /> */}
+        <VideoList onVideoSelect={(handleVideoSelect)} />
+        <VideoDetail video={selectVideo} />
+      </div>
     </div>
   );
 }

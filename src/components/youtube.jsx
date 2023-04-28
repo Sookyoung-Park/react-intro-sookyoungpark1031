@@ -45,25 +45,27 @@ import SearchBar from './search_bar';
 import VideoList from './video_list';
 import VideoDetail from './video_detail';
 
-import { setVideos } from '../actions';
+import { setVideos, selectVideo } from '../actions';
 
 function App(props) {
   const dispatch = useDispatch();
   // const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelected] = useState(null);
+  // const [selectedVideo, setSelected] = useState(null);
 
   const search = (text) => {
     youtubeSearch(text).then((result) => {
+      // dispatch(setVideos(result));
+      // setSelected(result[0]);
       dispatch(setVideos(result));
-      setSelected(result[0]);
-      console.log(result);
+      dispatch(selectVideo(result[0]));
+      // console.log(result);
     });
   };
 
   const debouncedSearch = useCallback(debounce(search, 500), []);
 
   const handleVideoSelect = useCallback((video) => {
-    setSelected(video);
+    dispatch(selectVideo(video));
   }, []);
 
   useEffect(() => {
@@ -78,8 +80,8 @@ function App(props) {
     <div>
       <SearchBar onSearchChange={debouncedSearch} />;
       <div id="video-section">
-        <VideoList onVideoSelect={(selection) => setSelected(selection)} />
-        <VideoDetail video={selectedVideo} />
+        <VideoList onVideoSelect={(handleVideoSelect)} />
+        <VideoDetail />
       </div>
 
     </div>
