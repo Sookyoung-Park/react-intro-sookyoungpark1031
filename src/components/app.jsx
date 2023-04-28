@@ -21,24 +21,26 @@ function App(props) {
 
   const debouncedSearch = useCallback(debounce(search, 500), []);
 
+  const handleVideoSelect = useCallback((video) => {
+    setSelected(video);
+  }, []);
+
   useEffect(() => {
     search('pixar');
   }, []);
 
-  // youtubeSearch('pixar').then(
-  //   console.log(videos),
-  // );
   useEffect(() => {
     console.log(videos);
   }, [videos]);
 
   return (
     <div>
-      <SearchBar onSearchChange={debouncedSearch} />;
-      <div id="video-section">
+      {/* <SearchBar onSearchChange={debouncedSearch} />; */}
+      <YouTube onVideoSelect={handleVideoSelect} />
+      {/* <div id="video-section">
         <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} />
         <VideoDetail video={selectedVideo} />
-      </div>
+      </div> */}
 
     </div>
   );
