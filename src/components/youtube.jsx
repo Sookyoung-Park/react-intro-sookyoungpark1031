@@ -1,45 +1,6 @@
-// import React, { useCallback, useEffect } from 'react';
-
-// import debounce from 'lodash.debounce';
-// import { useDispatch } from 'react-redux';
-// import youtubeSearch from '../services/youtube-api';
-// import SearchBar from './search_bar';
-// import VideoList from './video_list';
-// import VideoDetail from './video_detail';
-// import { setVideos } from '../actions';
-
-// function YouTube(props) {
-//   const dispatch = useDispatch();
-
-//   const search = (text) => {
-//     youtubeSearch(text).then((videos) => {
-//       dispatch(setVideos(videos));
-//     });
-//   };
-
-//   const debouncedSearch = useCallback(debounce(search, 500), []);
-
-//   useEffect(() => {
-//     search('pixar');
-//   }, []);
-
-//   return (
-//     <div>
-//       <SearchBar onSearchChange={debouncedSearch} />;
-//       <div id="video-section">
-//         <VideoDetail />
-//         <VideoList />
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default YouTube;
-
-import React, { useCallback, useState, useEffect } from 'react';
-
+import React, { useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import youtubeSearch from '../services/youtube-api';
 import SearchBar from './search_bar';
 import VideoList from './video_list';
@@ -47,18 +8,15 @@ import VideoDetail from './video_detail';
 
 import { setVideos, selectVideo } from '../actions';
 
-function App(props) {
+function App() {
   const dispatch = useDispatch();
-  // const [videos, setVideos] = useState([]);
-  // const [selectedVideo, setSelected] = useState(null);
+  const videos = useSelector((state) => state.videos);
+  const selectedVideo = useSelector((state) => state.selectedVideo);
 
   const search = (text) => {
     youtubeSearch(text).then((result) => {
-      // dispatch(setVideos(result));
-      // setSelected(result[0]);
       dispatch(setVideos(result));
       dispatch(selectVideo(result[0]));
-      // console.log(result);
     });
   };
 
@@ -66,24 +24,19 @@ function App(props) {
 
   const handleVideoSelect = useCallback((video) => {
     dispatch(selectVideo(video));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     search('pixar');
-  }, []);
-
-  // useEffect(() => {
-  //   console.log(videos);
-  // }, [videos]);
+  }, [search]);
 
   return (
     <div>
-      <SearchBar onSearchChange={debouncedSearch} />;
+      <SearchBar onSearchChange={debouncedSearch} />
       <div id="video-section">
-        <VideoList onVideoSelect={(handleVideoSelect)} />
-        <VideoDetail />
+        <VideoList videos={videos} onVideoSelect={handleVideoSelect} />
+        <VideoDetail video={selectedVideo} />
       </div>
-
     </div>
   );
 }

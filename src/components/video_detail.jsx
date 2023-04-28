@@ -27,7 +27,6 @@ import { useSelector } from 'react-redux';
 function VideoDetail() {
   const selectedVideo = useSelector((state) => state.video.selected);
 
-  // Here's a snippet that'll help
   if (!selectedVideo) {
     return <div>Loading...</div>;
   }
@@ -37,11 +36,15 @@ function VideoDetail() {
 
   return (
     <div className="embed-responsive embed-responsive-16by9">
-      <iframe title="youtube detail" className="embed-responsive-item" src={url} />
+      <div className="videodetailvideo">
+        <iframe title="youtube detail"
+          className="embed-responsive-item"
+          src={url}
+        />
+      </div>
       <div className="details">
-        {/* <h2>hfiwejfoaiwejfoiwajefoijweoijfowiehfpaweijf;oawiefh;owaeifho;waiehfweahfiwejfoijweoijfowiehfawiefh;owaeifho;waiehfweahfiwejfoaiwejfoiwajefoijweoijfowiehfpaweijf;oawi</h2> */}
-        <div>{selectedVideo.snippet.title}</div>
-        <div>{selectedVideo.snippet.description}</div>
+        <div className="title">{selectedVideo.snippet.title}</div>
+        <div className="description">{selectedVideo.snippet.description}</div>
       </div>
     </div>
   );
