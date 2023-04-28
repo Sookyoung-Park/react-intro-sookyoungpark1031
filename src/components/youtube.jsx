@@ -36,7 +36,6 @@ function YouTube(props) {
 
   return (
     <div>
-      hihihihi
       <SearchBar onSearchChange={debouncedSearch} />;
       {/* <div id="video-section"> */}
       {/* <VideoList onVideoSelect={(selection) => setSelected(selection)} videos={videos} /> */}

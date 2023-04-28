@@ -5,7 +5,7 @@ import youtubeSearch from '../services/youtube-api';
 import SearchBar from './search_bar';
 import VideoList from './video_list';
 import VideoDetail from './video_detail';
-// import YouTube from './youtube';
+import YouTube from './youtube';
 
 function App(props) {
   const [videos, setVideos] = useState([]);
@@ -25,9 +25,12 @@ function App(props) {
     search('pixar');
   }, []);
 
-  youtubeSearch('pixar').then(
-    console.log(videos),
-  );
+  // youtubeSearch('pixar').then(
+  //   console.log(videos),
+  // );
+  useEffect(() => {
+    console.log(videos);
+  }, [videos]);
 
   return (
     <div>

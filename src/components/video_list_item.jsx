@@ -15,5 +15,11 @@ function VideoListItem(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    videos: state.videos,
+  };
+};
+
 // export default VideoListItem;
-export default connect(null, { selectVideo })(VideoListItem);
+export default connect(mapStateToProps, { selectVideo })(VideoListItem);
