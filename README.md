@@ -7,7 +7,7 @@ This web app will search the **Youtube api(google api)** and **list the top resu
 [deployed url](https://soosa3.onrender.com)
 
 
-### **Componenet**
+### **Components**
 A component is a logical unit that packages up some functionality or some part of the display that can potentially be reused. React is basically just a tree of components
 
 - **Main App**: the top level component, it only has custom child components in it, not html components.
